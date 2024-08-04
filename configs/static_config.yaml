@@ -54,7 +54,7 @@ components_manager:
             method: GET
             task_processor: main-task-processor
         handler-store:
-            path: /api/v1/store
+            path: /api/v1/posts
             method: POST
             task_processor: main-task-processor
         handler-retrieve:
