@@ -29,6 +29,8 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
 # Common sources
 add_library(${PROJECT_NAME}_objs OBJECT
     src/redirect.hpp
+    src/store.cpp
+    src/store.hpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
 
