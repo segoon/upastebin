@@ -1,6 +1,7 @@
 #include "store.hpp"
 
 #include <userver/components/component_context.hpp>
+#include <userver/formats/json/inline.hpp>
 #include <userver/http/common_headers.hpp>
 #include <userver/server/handlers/exceptions.hpp>
 #include <userver/server/handlers/http_handler_base.hpp>
@@ -24,11 +25,14 @@ std::string StoreHandler::HandleRequestThrow(
   auto text = request.RequestBody();
   auto created_at = userver::utils::datetime::Now();
 
-  pg_->Execute(
-      userver::storages::postgres::ClusterHostType::kMaster,
-      "INSERT INTO upastebin.texts (uuid, text, created_at) VALUES $1, $2;",
-      uuid, text, created_at);
-  return {};
+  pg_->Execute(userver::storages::postgres::ClusterHostType::kMaster,
+               "INSERT INTO upastebin.texts (uuid, text, created_at) VALUES "
+               "($1, $2, $3);",
+               uuid, text, created_at);
+
+  auto json_response = userver::formats::json::MakeObject("uuid",
+                                            userver::utils::ToString(uuid));
+  return ToString(json_response);
 }
 
 }  // namespace upastebin

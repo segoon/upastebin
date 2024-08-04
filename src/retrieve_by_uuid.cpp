@@ -22,7 +22,7 @@ std::string RetrieveHandler::HandleRequestThrow(
 
   auto result = pg_->Execute(
       userver::storages::postgres::ClusterHostType::kSlave,
-      "SELECT text FROM upastebin.texts WHERE uuid=$1;", uuid);
+      "SELECT text FROM upastebin.texts WHERE uuid=($1::TEXT);", uuid);
   if (result.Size() == 0) {
     request.GetHttpResponse().SetStatusNotFound();
     return {};
