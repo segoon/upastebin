@@ -1,8 +1,8 @@
-DROP SCHEMA IF EXISTS hello_schema CASCADE;
+DROP SCHEMA IF EXISTS upastebin CASCADE;
 
-CREATE SCHEMA IF NOT EXISTS hello_schema;
+CREATE SCHEMA IF NOT EXISTS upastebin;
 
-CREATE TABLE IF NOT EXISTS hello_schema.users (
-    name TEXT PRIMARY KEY,
-    count INTEGER DEFAULT(1)
+CREATE TABLE IF NOT EXISTS upastebin.texts (
+    uuid TEXT PRIMARY KEY,
+    text TEXT NOT NULL
 );

@@ -8,6 +8,7 @@
 #include <userver/clients/dns/component.hpp>
 
 #include "redirect.hpp"
+#include "store.hpp"
 
 int main(int argc, char* argv[]) {
   auto component_list = userver::components::MinimalServerComponentList()
@@ -18,7 +19,8 @@ int main(int argc, char* argv[]) {
 
   component_list.Append<userver::components::Postgres>("postgres-db");
   component_list.Append<userver::clients::dns::Component>();
-  component_list.Append<upastebin::Redirect>();
+  component_list.Append<upastebin::RedirectHandler>();
+  component_list.Append<upastebin::StoreHandler>();
 
   return userver::utils::DaemonMain(argc, argv, component_list);
 }

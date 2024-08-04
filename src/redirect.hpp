@@ -11,7 +11,7 @@ namespace {
 const std::string kLocation = "Location";
 }
 
-class Redirect final : public userver::server::handlers::HttpHandlerBase {
+class RedirectHandler final : public userver::server::handlers::HttpHandlerBase {
  public:
   static constexpr std::string_view kName = "handler-redirect";
 
