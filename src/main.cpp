@@ -9,6 +9,7 @@
 
 #include "redirect.hpp"
 #include "store.hpp"
+#include "retrieve_by_uuid.hpp"
 
 int main(int argc, char* argv[]) {
   auto component_list = userver::components::MinimalServerComponentList()
@@ -17,10 +18,11 @@ int main(int argc, char* argv[]) {
                             .Append<userver::components::HttpClient>()
                             .Append<userver::server::handlers::TestsControl>();
 
-  component_list.Append<userver::components::Postgres>("postgres-db");
+  component_list.Append<userver::components::Postgres>("postgres");
   component_list.Append<userver::clients::dns::Component>();
   component_list.Append<upastebin::RedirectHandler>();
   component_list.Append<upastebin::StoreHandler>();
+  component_list.Append<upastebin::RetrieveHandler>();
 
   return userver::utils::DaemonMain(argc, argv, component_list);
 }

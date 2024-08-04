@@ -53,8 +53,16 @@ components_manager:
             path: /
             method: GET
             task_processor: main-task-processor
+        handler-store:
+            path: /api/v1/store
+            method: POST
+            task_processor: main-task-processor
+        handler-retrieve:
+            path: /api/v1/posts/{uuid}
+            method: GET
+            task_processor: main-task-processor
 
-        postgres-db:
+        postgres:
             dbconnection: $dbconnection
             dbconnection#env: DB_CONNECTION
             blocking_task_processor: fs-task-processor

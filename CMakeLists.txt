@@ -31,6 +31,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
     src/redirect.hpp
     src/store.cpp
     src/store.hpp
+    src/retrieve_by_uuid.cpp
+    src/retrieve_by_uuid.hpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
 

@@ -1,6 +1,5 @@
 #include "store.hpp"
 
-#include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
 #include <userver/http/common_headers.hpp>
 #include <userver/server/handlers/exceptions.hpp>
@@ -15,7 +14,7 @@ namespace upastebin {
 StoreHandler::StoreHandler(const userver::components::ComponentConfig& config,
                            const userver::components::ComponentContext& context)
     : HttpHandlerBase(config, context),
-      pg_(context.FindComponent<userver::components::Postgres>("pg-1")
+      pg_(context.FindComponent<userver::components::Postgres>("postgres")
               .GetCluster()) {}
 
 std::string StoreHandler::HandleRequestThrow(
