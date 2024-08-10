@@ -23,8 +23,7 @@ std::string StoreHandler::HandleRequestThrow(
     userver::server::request::RequestContext&) const {
   auto uuid = userver::utils::generators::GenerateBoostUuid();
   auto author = request.GetArg("author");
-  // TODO: auto ip_source = request.Get
-  std::string ip_source;
+  auto ip_source = request.GetRemoteAddress().PrimaryAddressString();
   auto text = request.RequestBody();
   auto created_at = userver::utils::datetime::Now();
 

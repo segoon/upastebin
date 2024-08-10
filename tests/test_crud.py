@@ -17,9 +17,7 @@ async def test_empty_db(service_client):
 
 async def test_create_and_retrieve(service_client):
     response = await service_client.post(
-        '/api/v1/posts/',
-        params={'author': 'foo', 'ip': '127.0.0.1'},
-        data=TEXT,
+        '/api/v1/posts/', params={'author': 'foo'}, data=TEXT,
     )
     assert response.status == 200
 
@@ -34,5 +32,5 @@ async def test_create_and_retrieve(service_client):
     response = await service_client.get('/api/v1/latest')
     assert response.status == 200
     assert response.json() == {
-        'items': {'author': 'foo', 'ip': '127.0.0.1', 'text': TEXT},
+        'items': [{'author': 'foo', 'ip': '::ffff:127.0.0.1', 'text': TEXT}],
     }
