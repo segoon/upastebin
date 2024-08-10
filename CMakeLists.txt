@@ -35,6 +35,10 @@ add_library(${PROJECT_NAME}_objs OBJECT
     src/retrieve_by_uuid.hpp
     src/latest.cpp
     src/latest.hpp
+    src/resources.cpp
+    src/resources.hpp
+    src/text.cpp
+    src/text.hpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
 

@@ -11,6 +11,8 @@
 #include "store.hpp"
 #include "retrieve_by_uuid.hpp"
 #include "latest.hpp"
+#include "resources.hpp"
+#include "text.hpp"
 
 int main(int argc, char* argv[]) {
   auto component_list = userver::components::MinimalServerComponentList()
@@ -25,6 +27,8 @@ int main(int argc, char* argv[]) {
   component_list.Append<upastebin::StoreHandler>();
   component_list.Append<upastebin::RetrieveHandler>();
   component_list.Append<upastebin::LatestHandler>();
+  component_list.Append<upastebin::TextHandler>();
+  component_list.Append<upastebin::ResourcesHandler>();
 
   return userver::utils::DaemonMain(argc, argv, component_list);
 }
