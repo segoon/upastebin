@@ -10,6 +10,7 @@
 #include "redirect.hpp"
 #include "store.hpp"
 #include "retrieve_by_uuid.hpp"
+#include "latest.hpp"
 
 int main(int argc, char* argv[]) {
   auto component_list = userver::components::MinimalServerComponentList()
@@ -23,6 +24,7 @@ int main(int argc, char* argv[]) {
   component_list.Append<upastebin::RedirectHandler>();
   component_list.Append<upastebin::StoreHandler>();
   component_list.Append<upastebin::RetrieveHandler>();
+  component_list.Append<upastebin::LatestHandler>();
 
   return userver::utils::DaemonMain(argc, argv, component_list);
 }

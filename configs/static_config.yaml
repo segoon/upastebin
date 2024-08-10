@@ -1,31 +1,28 @@
 components_manager:
-    task_processors:                  # Task processor is an executor for coroutine tasks
+    task_processors:
 
-        main-task-processor:          # Make a task processor for CPU-bound couroutine tasks.
-            worker_threads: $worker-threads         # Process tasks in 4 threads.
+        main-task-processor:
+            worker_threads: $worker-threads       
 
-        fs-task-processor:            # Make a separate task processor for filesystem bound tasks.
+        fs-task-processor:
             worker_threads: $worker-fs-threads
 
     default_task_processor: main-task-processor
 
-    components:                       # Configuring components that were registered via component_list
+    components:          
         server:
-            listener:                 # configuring the main listening socket...
-                port: $server-port            # ...to listen on this port and...
-                task_processor: main-task-processor    # ...process incoming requests on this task processor.
+            listener:     
+                port: $server-port  
+                task_processor: main-task-processor  
         logging:
             fs-task-processor: fs-task-processor
             loggers:
                 default:
                     file_path: '@stderr'
                     level: $logger-level
-                    overflow_behavior: discard  # Drop logs if the system is too busy to write them down.
+                    overflow_behavior: discard 
 
-        # Dynamic config options. Cache is disabled, updates are disabled.
         dynamic-config:
-            # For most of userver dynamic configs, defaults are used, some are overridden here.
-            # See userver "dynamic config" docs for what configs exist.
             defaults:
                 HTTP_CLIENT_CONNECTION_POOL_SIZE: 1000
                 POSTGRES_DEFAULT_COMMAND_CONTROL:
@@ -49,16 +46,29 @@ components_manager:
             throttling_enabled: false
             url_trailing_slash: strict-match
 
-        handler-redirect:
-            path: /
-            method: GET
-            task_processor: main-task-processor
         handler-store:
             path: /api/v1/posts
             method: POST
             task_processor: main-task-processor
+        handler-latest:
+            path: /api/v1/latest
+            method: GET
+            task_processor: main-task-processor
         handler-retrieve:
             path: /api/v1/posts/{uuid}
+            method: GET
+            task_processor: main-task-processor
+
+        handler-redirect:
+            path: /
+            method: GET
+            task_processor: main-task-processor
+        handler-text:
+            path: /*
+            method: GET
+            task_processor: main-task-processor
+        handler-resources:
+            path: /r/{subpath}
             method: GET
             task_processor: main-task-processor
 

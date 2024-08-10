@@ -33,6 +33,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
     src/store.hpp
     src/retrieve_by_uuid.cpp
     src/retrieve_by_uuid.hpp
+    src/latest.cpp
+    src/latest.hpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
 
