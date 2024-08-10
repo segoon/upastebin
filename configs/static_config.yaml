@@ -33,6 +33,10 @@ components_manager:
 
         http-client:
             fs-task-processor: fs-task-processor
+        resources-cache:
+            dir: /var/www
+            update-period: 30s
+            fs-task-processor: fs-task-processor
 
         tests-control:
             load-enabled: $is-testing

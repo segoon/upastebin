@@ -6,6 +6,7 @@
 #include <userver/storages/postgres/component.hpp>
 #include <userver/utils/daemon_run.hpp>
 #include <userver/clients/dns/component.hpp>
+#include <userver/components/fs_cache.hpp>
 
 #include "redirect.hpp"
 #include "store.hpp"
@@ -23,6 +24,8 @@ int main(int argc, char* argv[]) {
 
   component_list.Append<userver::components::Postgres>("postgres");
   component_list.Append<userver::clients::dns::Component>();
+  component_list.Append<userver::components::FsCache>("resources-cache");
+
   component_list.Append<upastebin::RedirectHandler>();
   component_list.Append<upastebin::StoreHandler>();
   component_list.Append<upastebin::RetrieveHandler>();

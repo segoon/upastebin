@@ -1,34 +1,37 @@
 #include "resources.hpp"
 
+#include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
-// #include <userver/formats/json/inline.hpp>
-// #include <userver/http/common_headers.hpp>
-// #include <userver/server/handlers/exceptions.hpp>
-// #include <userver/server/handlers/http_handler_base.hpp>
+#include <userver/components/fs_cache.hpp>
 
 namespace upastebin {
-
-namespace {
-
-void ValidateFilename(std::string_view filename) {
-  // TODO
-}
-
-}  // namespace
 
 ResourcesHandler::ResourcesHandler(
     const userver::components::ComponentConfig& config,
     const userver::components::ComponentContext& context)
     : HttpHandlerBase(config, context),
-      fs_(context.GetTaskProcessor("fs-task-processor")) {}
+      fs_client_(
+          context.FindComponent<userver::components::FsCache>("resources-cache")
+              .GetClient()) {}
 
 std::string ResourcesHandler::HandleRequestThrow(
     const userver::server::http::HttpRequest& request,
     userver::server::request::RequestContext&) const {
   auto subpath = request.GetPathArg("subpath");
-  ValidateFilename(subpath);
+  // Note: no need to validate subpath as invalid name would lead to cache miss
+  // in FsCacheClient
 
-  return {};
+  auto file_ptr = fs_client_.TryGetFile("/" + subpath);
+  if (file_ptr) {
+    LOG_INFO() << "Found";
+    // TODO: ext -> content-type
+    return file_ptr->data;
+  } else {
+    LOG_INFO() << "Not Found";
+    auto& response = request.GetHttpResponse();
+    response.SetStatus(userver::server::http::HttpStatus::kNotFound);
+    return {};
+  }
 }
 
 }  // namespace upastebin
