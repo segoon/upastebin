@@ -39,11 +39,9 @@ std::string ResourcesHandler::HandleRequestThrow(
   auto file_ptr = fs_client_.TryGetFile("/" + subpath);
   auto& response = request.GetHttpResponse();
   if (file_ptr) {
-    LOG_INFO() << "Found";
     response.SetContentType(GetContentType(file_ptr->extension));
     return file_ptr->data;
   } else {
-    LOG_INFO() << "Not Found";
     auto& response = request.GetHttpResponse();
     response.SetStatus(userver::server::http::HttpStatus::kNotFound);
     return {};
