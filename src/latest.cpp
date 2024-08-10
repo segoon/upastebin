@@ -1,6 +1,7 @@
 #include "latest.hpp"
 
 #include <userver/components/component_context.hpp>
+#include <userver/formats/json/inline.hpp>
 #include <userver/formats/json/value_builder.hpp>
 #include <userver/storages/postgres/cluster.hpp>
 #include <userver/storages/postgres/component.hpp>
@@ -25,7 +26,8 @@ std::string LatestHandler::HandleRequestThrow(
       "upastebin.texts ORDER BY created_at DESC LIMIT $2::INTEGER;",
       1000, 10);
 
-  userver::formats::json::ValueBuilder response;
+  userver::formats::json::ValueBuilder response(
+      userver::formats::common::Type::kArray);
   for (const auto& item : result) {
     userver::formats::json::ValueBuilder response_item;
 
@@ -35,7 +37,8 @@ std::string LatestHandler::HandleRequestThrow(
 
     response.PushBack(response_item.ExtractValue());
   }
-  return ToString(response.ExtractValue());
+  return ToString(
+      userver::formats::json::MakeObject("items", response.ExtractValue()));
 }
 
 }  // namespace upastebin
