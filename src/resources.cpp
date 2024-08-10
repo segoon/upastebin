@@ -6,6 +6,21 @@
 
 namespace upastebin {
 
+namespace {
+
+std::string_view GetContentType(std::string_view extention) {
+  if (extention == ".js")
+    return "application/javascript";
+  else if (extention == ".css")
+    return "text/css";
+  else if (extention == ".html")
+    return "text/html; charset=UTF-8";
+  else
+    return "application/octet-stream";
+}
+
+}  // namespace
+
 ResourcesHandler::ResourcesHandler(
     const userver::components::ComponentConfig& config,
     const userver::components::ComponentContext& context)
@@ -22,9 +37,10 @@ std::string ResourcesHandler::HandleRequestThrow(
   // in FsCacheClient
 
   auto file_ptr = fs_client_.TryGetFile("/" + subpath);
+  auto& response = request.GetHttpResponse();
   if (file_ptr) {
     LOG_INFO() << "Found";
-    // TODO: ext -> content-type
+    response.SetContentType(GetContentType(file_ptr->extension));
     return file_ptr->data;
   } else {
     LOG_INFO() << "Not Found";

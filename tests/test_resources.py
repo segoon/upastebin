@@ -2,10 +2,17 @@ import pytest
 import yarl
 
 
-@pytest.mark.parametrize('subpath', ['index.html', 'index.js'])
-async def test_found(service_client, subpath):
+@pytest.mark.parametrize(
+    'subpath,content_type',
+    [
+        ('index.html', 'text/html; charset=UTF-8'),
+        ('index.js', 'application/javascript'),
+    ],
+)
+async def test_found(service_client, subpath, content_type):
     response = await service_client.get(f'/r/{subpath}')
     assert response.status == 200
+    assert response.headers['content-type'] == content_type
 
 
 @pytest.mark.parametrize(
