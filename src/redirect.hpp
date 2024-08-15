@@ -22,7 +22,7 @@ class RedirectHandler final : public userver::server::handlers::HttpHandlerBase 
       userver::server::request::RequestContext&) const override {
     auto& response = request.GetHttpResponse();
     response.SetStatus(userver::server::http::HttpStatus::kTemporaryRedirect);
-    response.SetHeader(userver::http::headers::kLocation, "/index.html");
+    response.SetHeader(userver::http::headers::kLocation, "/r/index.html");
     return {};
   }
 };

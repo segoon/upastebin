@@ -4,8 +4,9 @@ fetch("../api/v1/latest")
 	})
 	.then(function (json) {
 		latest_html = "";
-		for (const item in json.items) {
-			latest_html += "<p>author: " + item["author"] + "</p>";
+		for (const i in json.items) {
+			const item = json.items[i];
+			latest_html += "<p><a href=\"/" + item.id + "\">author: " + item.author + "</a></p>";
 		}
 		document.getElementById("latest").innerHTML = latest_html;
 	})
