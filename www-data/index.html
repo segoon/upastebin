@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+		<meta charset="UTF8">
+		<title>Pastebin (userver)</title>
+	</head>
+	<body>
+		<form name="form" action="#">
+			<p><label for="author">Автор: </label><input type="text" name="author" required></p>
+			<p><label for="text">Текст: </label><textarea rows="30" cols="100" name="text"></textarea></p>
+			<input type="submit" onclick="onSend()">
+		</form>
+		<span id="latest">unchanged</span>
+		<script type="text/javascript" src="../r/index.js"></script>
+	</body>
+</html>

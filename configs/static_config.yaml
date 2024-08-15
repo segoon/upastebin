@@ -34,8 +34,8 @@ components_manager:
         http-client:
             fs-task-processor: fs-task-processor
         resources-cache:
-            dir: /var/www
-            update-period: 30s
+            dir: /home/segoon/projects/upastebin/www-data
+            update-period: 1s
             fs-task-processor: fs-task-processor
 
         tests-control:
@@ -68,7 +68,7 @@ components_manager:
             method: GET
             task_processor: main-task-processor
         handler-text:
-            path: /*
+            path: /{id}
             method: GET
             task_processor: main-task-processor
         handler-resources:

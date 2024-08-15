@@ -1,9 +1,7 @@
 #pragma once
 
-#include <userver/engine/task/task_processor_fwd.hpp>
-#include <userver/http/common_headers.hpp>
-#include <userver/server/handlers/exceptions.hpp>
 #include <userver/server/handlers/http_handler_base.hpp>
+#include <userver/fs/fs_cache_client.hpp>
 
 namespace upastebin {
 
@@ -20,7 +18,7 @@ class TextHandler final
       userver::server::request::RequestContext&) const override;
 
  private:
-  userver::engine::TaskProcessor& fs_;
+  const userver::fs::FsCacheClient& fs_client_;
 };
 
 }  // namespace upastebin
