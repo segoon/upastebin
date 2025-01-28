@@ -16,7 +16,9 @@ function setup_text() {
       return response.text();
     })
     .then(function (text) {
-      document.getElementById("text").innerHTML = text; // TODO: escape
+      const p = document.createElement("div");
+      p.appendChild(document.createTextNode(text));
+      document.getElementById("text").innerHTML = p.innerHTML;
     })
     .catch(function (error) {
       alert(error);

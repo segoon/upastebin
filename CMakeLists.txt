@@ -63,8 +63,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_objs)
 
 
 # Functional Tests
-include(UserverTestsuite)
-
 userver_testsuite_add_simple()
 
 

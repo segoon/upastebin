@@ -31,6 +31,14 @@ async def test_create_and_retrieve(service_client):
 
     response = await service_client.get('/api/v1/latest')
     assert response.status == 200
-    assert response.json() == {
-        'items': [{'author': 'foo', 'ip': '::ffff:127.0.0.1', 'text': TEXT}],
+    json = response.json()
+    assert json == {
+        'items': [
+            {
+                'author': 'foo',
+                'ip': '::ffff:127.0.0.1',
+                'id': uuid,
+                'text': TEXT,
+            }
+        ],
     }

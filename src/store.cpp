@@ -2,6 +2,7 @@
 
 #include <userver/components/component_context.hpp>
 #include <userver/formats/json/inline.hpp>
+#include <userver/storages/postgres/io/chrono.hpp>
 #include <userver/http/common_headers.hpp>
 #include <userver/server/handlers/exceptions.hpp>
 #include <userver/server/handlers/http_handler_base.hpp>
@@ -25,7 +26,7 @@ std::string StoreHandler::HandleRequestThrow(
   auto author = request.GetArg("author");
   auto ip_source = request.GetRemoteAddress().PrimaryAddressString();
   auto text = request.RequestBody();
-  auto created_at = userver::utils::datetime::Now();
+  userver::storages::postgres::TimePointTz created_at{userver::utils::datetime::Now()};
 
   pg_->Execute(userver::storages::postgres::ClusterHostType::kMaster,
                "INSERT INTO upastebin.texts (uuid, author, ip_source, text, created_at) VALUES "

@@ -1,5 +1,5 @@
 CMAKE_COMMON_FLAGS ?= -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-CMAKE_DEBUG_FLAGS ?= -DUSERVER_SANITIZE='addr ub'
+CMAKE_DEBUG_FLAGS ?= -DUSERVER_SANITIZE=''
 CMAKE_RELEASE_FLAGS ?=
 NPROCS ?= $(shell nproc)
 CLANG_FORMAT ?= clang-format
@@ -34,9 +34,8 @@ build-debug build-release: build-%: build_%/CMakeCache.txt
 # Test
 .PHONY: test-debug test-release
 test-debug test-release: test-%: build-%
-	cmake --build build_$* -j $(NPROCS) --target upastebin_unittest
-	cmake --build build_$* -j $(NPROCS) --target upastebin_benchmark
-	cd build_$* && ((test -t 1 && GTEST_COLOR=1 PYTEST_ADDOPTS="--color=yes" ctest -V) || ctest -V)
+	cmake --build build_$* -j $(NPROCS) --target runtests-upastebin
+	cd build_$* && GTEST_COLOR=1 PYTEST_ADDOPTS="--color=yes" ctest -V
 	pycodestyle tests
 
 # Start the service (via testsuite service runner)

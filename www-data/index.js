@@ -26,7 +26,7 @@ function onSend() {
 		return response.json();
 	})
 	.then(function(json) {
-		alert(json);
+		document.location = '../' + json['uuid'];
 	})
 	.catch(function (error) {
 		alert(error);
