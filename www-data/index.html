@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
   <head>
-		<meta charset="UTF8">
+		<meta charset="utf-8">
 		<title>Pastebin (userver)</title>
 	</head>
 	<body>
 		<form name="form" action="#">
-			<p><label for="author">Автор: </label><input type="text" name="author" required></p>
-			<p><label for="text">Текст: </label><textarea rows="30" cols="100" name="text"></textarea></p>
+			<p><label for="author">Автор: </label><input type="text" id="author" name="author" required></p>
+			<p><label for="text">Текст: </label><textarea rows="30" cols="100" id="text" name="text"></textarea></p>
 			<input type="submit" onclick="onSend()">
 		</form>
 		<span id="latest">unchanged</span>
-		<script type="text/javascript" src="../r/index.js"></script>
+		<script src="../r/index.js"></script>
 	</body>
 </html>
