@@ -6,7 +6,7 @@ function get_text_id() {
 }
 
 function fetch_text_by_id(id) {
-  return fetch("../api/v1/posts/" + id);
+  return fetch("/api/v1/posts/" + id);
 }
 
 function setup_text() {

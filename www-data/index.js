@@ -1,4 +1,4 @@
-fetch("../api/v1/latest")
+fetch("/api/v1/latest")
 	.then(function (response) {
 		return response.json();
 	})
@@ -18,7 +18,7 @@ function onSend() {
 	const author = document.forms["form"].author.value;
 	const text =   document.forms["form"].text.value;
 
-	fetch("../api/v1/posts?author=" + author, {
+	fetch("/api/v1/posts?author=" + author, {
 		method: "POST",
 		body: text,
 	})
@@ -26,7 +26,7 @@ function onSend() {
 		return response.json();
 	})
 	.then(function(json) {
-		document.location = '../' + json['uuid'];
+		document.location.href = '/' + json['uuid'];
 	})
 	.catch(function (error) {
 		alert(error);
