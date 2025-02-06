@@ -40,6 +40,7 @@ std::string ResourcesHandler::HandleRequestThrow(
   auto& response = request.GetHttpResponse();
   if (file_ptr) {
     response.SetContentType(GetContentType(file_ptr->extension));
+    response.SetHeader(USERVER_NAMESPACE::http::headers::kExpires, "600");
     return file_ptr->data;
   } else {
     auto& response = request.GetHttpResponse();
