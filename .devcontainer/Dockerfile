@@ -8,7 +8,7 @@ ENV GID=${GID}
 
 # Update + base
 RUN apt-get update \
-    && apt-get install -y sudo nano wget curl clang clang-18 clang-tools-18
+    && apt-get install -y sudo nano wget curl openssh-client clang clang-18 clang-tools-18
 
 # Create user if target uid not exist (possible login as postgres?)
 RUN if getent passwd "$UID" > /dev/null; then \
