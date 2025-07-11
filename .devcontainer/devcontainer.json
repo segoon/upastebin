@@ -1,0 +1,48 @@
+{
+    "name": "upastbin-develop",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/user/upastbin,type=bind",
+    "remoteUser": "user",
+    "workspaceFolder": "/home/user/upastbin",
+    "containerEnv": {
+        "SHELL": "/bin/bash",
+        "PREFIX": "${PREFIX:-~/.local}",
+        "CCACHE_DIR": "/home/user/.cache/ccache",
+        "CORES_DIR": "/cores"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "llvm-vs-code-extensions.vscode-clangd",
+                "ms-vscode.cmake-tools",
+                "ms-vscode.makefile-tools",
+                "vadimcn.vscode-lldb",
+                "ms-azuretools.vscode-docker",
+                "Decodetalkers.neocmakelsp-vscode"
+            ],
+            "settings": {
+                "cmake.automaticReconfigure": false,
+                "cmake.configureOnEdit": false,
+                "cmake.configureOnOpen": false,
+                "cmake.copyCompileCommands": "${workspaceFolder}/.vscode/compile_commands.json",
+                "clangd.path": "/usr/bin/clangd",
+                "clangd.arguments": [
+                    "--background-index",
+                    "--compile-commands-dir=.vscode",
+                    "--clang-tidy",
+                    "--completion-style=detailed",
+                    "--header-insertion=never"
+                ]
+            }
+        }
+    },
+    "mounts": [
+        {
+            "type": "bind",
+            "source": "/home/${env:USER}/.ssh",
+            "target": "/home/user/.ssh"
+        }
+    ]
+}
